@@ -19,18 +19,17 @@ def fetch_google_input_method_result(context, pinyin, target):
     """
     params = {
         'text': f"|{context},{pinyin}" if context else pinyin,
-        'itc': 'zh-t-i0-pinyin',
         'num': 11,
         'cp': 0,
         'cs': 1,
         'ie': 'utf-8',
-        'oe': 'utf-8',
-        'app': 'demopage'
+        'oe': 'utf-8'
     }
     headers = {
-        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+        'content-type': 'application/json'
     }
-    url = 'https://inputtools.google.com/request'
+    url = 'https://inputtools.google.com/request?itc=zh-t-i0-pinyin&app=test'
     data = requests.post(url, params=params, headers=headers).json()[1][0][1]
     if len(data[0]) == len(target) and data[0] != target:
         return data[0]
@@ -156,7 +155,7 @@ def add_noise_to_sentence(text):
                                 })
                 error_index_set.update(list(range(start, end)))
                 break
-    return {'origin': text, 'noise': ''.join(return_char_list), 'details': details}
+    return {"origin": text, "noise": "".join(return_char_list), "details": details}
 
 
 if __name__ == '__main__':
